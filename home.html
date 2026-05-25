@@ -118,6 +118,39 @@
         transform: scale(1.15) !important; /* Bumps up the size a little extra (change to 1.2 or 1.3 if you want it HUGE) */
         margin-bottom: 0px !important;
     }
+
+
+    /* ... your other mobile fixes ... */
+    
+    @media (max-width: 480px) {
+        .card-buttons {
+            justify-content: center; 
+            gap: 10px;
+            width: 100%;
+        }
+        .card-btn {
+            flex: 1; 
+            min-width: 0 !important; 
+            padding: 10px 5px !important;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+    /* 1. Make the whole carousel container taller so things actually fit */
+    .carousel-container {
+        height: 520px !important; /* Increased from the default 380px */
+    }
+
+    /* 2. Protect the image from being squished by the browser */
+    .card-image {
+        height: 150px !important; 
+        min-height: 150px !important;
+        flex-shrink: 0 !important; /* This is the magic rule that stops the squishing */
+    }
+}   
+</style> </head>
+<body>
 }
 
     </style>
@@ -383,7 +416,7 @@ const carouselDataSet = [
         image: "Images/dadu.jpg",
         title: "Dandumonara 2026",
         description: "Inter-School Water Rocket Competition 2026 - Where young innovators launch beyond limits.",
-        date: "2026-01-04T09:00:00Z",
+        date: "2026-06-10T09:00:00Z",
         url: "https://forms.gle/tN83qLReXNAUUMzi9",
         rulesUrl: "pdfs/INTER-SCHOOL WATER ROCKET COMPETITION.pdf"
     },
@@ -391,7 +424,7 @@ const carouselDataSet = [
         image: "Images/lumora.jpg",
         title: "Lumora 2026",
         description: "Inter-School Astro Photography Competition 2026 - Capture the beauty beyond the stars.",
-        date: "2026-01-05T09:00:00Z",
+        date: "2026-06-10T09:00:00Z",
         url: "https://forms.gle/XWignNSZweAbQ3vy6",
         rulesUrl: "pdfs/INTER-SCHOOL PHOTOGRAPHIC COMPETITION.pdf"
     },
@@ -399,7 +432,7 @@ const carouselDataSet = [
         image: "Images/quasar.jpg",
         title: "QUASAR 2026",
         description: "Inter-School Astro Quiz Competition 2026 - Challenge your knowledge beyond the stars.",
-        date: "2026-01-06T09:00:00Z",
+        date: "2026-06-10T09:00:00Z",
         url: "https://forms.gle/xjL37yFq11N5qyHX8",
         rulesUrl: "pdfs/INTER-SCHOOL ASTRONOMY QUIZ COMPETITION.pdf"
     },
@@ -407,29 +440,13 @@ const carouselDataSet = [
         image: "Images/comic.jpg",
         title: "Cosmic Stage 2026",
         description: "Inter-School Astro Presentation Competition 2026 - Present ideas that reach beyond the universe.",
-        date: "2026-01-07T09:00:00Z",
+        date: "2026-06-10T09:00:00Z",
         url: "https://forms.gle/NzLrQ6MP7TrWJ2xN8",
         rulesUrl: "pdfs/INTER-SCHOOL VIDEOGRPHY COMPETITION.pdf"
     }
 ];
 
-// Default countdown: 13 days 23:59:59 from now for events without a date
-(() => {
-    const defaultMs = (((13 * 24) + 23) * 3600 + 59 * 60 + 59) * 1000; // 13 days + 23:59:59
-    carouselDataSet.forEach(ev => {
-        if (!ev.date) {
-            ev.date = new Date(Date.now() + defaultMs).toISOString();
-            return;
-        }
-        const parsed = new Date(ev.date);
-        if (isNaN(parsed.getTime()) || parsed.getTime() <= Date.now()) {
-            // if provided date is invalid or in the past, set default future date
-            ev.date = new Date(Date.now() + defaultMs).toISOString();
-        } else {
-            ev.date = parsed.toISOString();
-        }
-    });
-})();
+
 
 function createCarouselCards() {
     if (!carouselContainer) return;
@@ -667,12 +684,7 @@ if (carouselContainer) {
         if (e.pointerType === 'mouse' && e.button !== 0) return;
         isDragging = true;
         startX = e.clientX;
-        lastX = startX;
-        lastTime = performance.now();
-        currentTranslate = 0;
-        velocity = 0;
-        carouselContainer.classList.add('dragging');
-        try { carouselContainer.setPointerCapture(e.pointerId); } catch(err){}
+       
     });
     
     carouselContainer.addEventListener('pointermove', (e) => {

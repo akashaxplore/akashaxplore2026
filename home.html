@@ -58,6 +58,12 @@
         padding:0px 0 0px 0;
         -webkit-font-smoothing:antialiased;
         font-family:'Poppins', 'Orbitron', sans-serif;
+
+        background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 60%, rgba(0,0,0,0) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Hides the standard text color so the gradient shows */
     }
 
     
@@ -374,36 +380,36 @@ let carouselCurrent = 0;
 let autoPlayInterval = null;
 const carouselDataSet = [
     {
-        image: "Images\\dadu.jpg",
+        image: "Images/dadu.jpg",
         title: "Dandumonara 2026",
         description: "Inter-School Water Rocket Competition 2026 - Where young innovators launch beyond limits.",
         date: "2026-01-04T09:00:00Z",
         url: "https://forms.gle/tN83qLReXNAUUMzi9",
-        rulesUrl: "pdfs\\INTER-SCHOOL WATER ROCKET COMPETITION.pdf"
+        rulesUrl: "pdfs/INTER-SCHOOL WATER ROCKET COMPETITION.pdf"
     },
     {
-        image: "Images\\lumora.jpg",
+        image: "Images/lumora.jpg",
         title: "Lumora 2026",
         description: "Inter-School Astro Photography Competition 2026 - Capture the beauty beyond the stars.",
         date: "2026-01-05T09:00:00Z",
         url: "https://forms.gle/XWignNSZweAbQ3vy6",
-        rulesUrl: "pdfs\\INTER-SCHOOL PHOTOGRAPHIC COMPETITION.pdf"
+        rulesUrl: "pdfs/INTER-SCHOOL PHOTOGRAPHIC COMPETITION.pdf"
     },
     {
-        image: "Images\\quasar.jpg",
+        image: "Images/quasar.jpg",
         title: "QUASAR 2026",
         description: "Inter-School Astro Quiz Competition 2026 - Challenge your knowledge beyond the stars.",
         date: "2026-01-06T09:00:00Z",
         url: "https://forms.gle/xjL37yFq11N5qyHX8",
-        rulesUrl: "pdfs\\INTER-SCHOOL ASTRONOMY QUIZ COMPETITION.pdf"
+        rulesUrl: "pdfs/INTER-SCHOOL ASTRONOMY QUIZ COMPETITION.pdf"
     },
     {
-        image: "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?q=80&w=1200&auto=format&fit=crop",
+        image: "Images/comic.jpg",
         title: "Cosmic Stage 2026",
         description: "Inter-School Astro Presentation Competition 2026 - Present ideas that reach beyond the universe.",
         date: "2026-01-07T09:00:00Z",
         url: "https://forms.gle/NzLrQ6MP7TrWJ2xN8",
-        rulesUrl: "pdfs\\INTER-SCHOOL VIDEOGRPHY COMPETITION.pdf"
+        rulesUrl: "pdfs/INTER-SCHOOL VIDEOGRPHY COMPETITION.pdf"
     }
 ];
 
@@ -861,8 +867,8 @@ if(gallerySlider && nextGalleryBtn && prevGalleryBtn){
             <div class="contact-item">
                 <span class="icon">📞</span>
                 <div class="contact-text">
-                    <p>+94 123 456 789</p>
-                    <p>+94 987 654 321</p>
+                    <p>+94 75 231 6990</p>
+                    <p>+94 70 708 9956</p>
                 </div>
             </div>
             <div class="contact-item">
@@ -900,12 +906,7 @@ if(gallerySlider && nextGalleryBtn && prevGalleryBtn){
         </div>
 
         <!-- Section 3: Subscribe -->
-        <div class="footer-section subscribe">
-            <h3 class="footer-title">SUBSCRIBE TO OUR NEWSLETTER</h3>
-            <p class="subscribe-desc">Stay updated with the latest astronomy news and event announcements.</p>
-            <form class="subscribe-form" action="#" method="POST" onsubmit="event.preventDefault();">
-                <input type="email" placeholder="Enter your email" required class="subscribe-input" />
-                <button type="submit" class="subscribe-btn">Submit</button>
+      
             </form>
         </div>
     </div>

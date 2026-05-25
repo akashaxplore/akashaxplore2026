@@ -15,15 +15,15 @@
         flex-direction:column;
         align-items:center;
         justify-content:center;
-        padding:40px 20px;
+        padding:0px 0px;
         background:transparent;
         height:auto; /* allow content-driven height so GIF can be sized */
     }
     .hero-media-wrapper{width:100%;display:flex;justify-content:center;}
     .video-hero .hero-gif{
         width:100%;
-        max-width:720px;
-        max-height:60vh; /* keep GIF visually smaller on large screens */
+        max-width:80vw;
+        max-height:80vh; /* keep GIF visually smaller on large screens */
         height:auto;
         object-fit:contain;
         z-index:0;
@@ -33,19 +33,35 @@
         box-shadow:0 10px 30px rgba(0,0,0,0.25);
         background:transparent;
     }
-    .hero-caption{margin-top:20px;text-align:center;max-width:900px;padding:0 10px;}
+   .hero-caption {
+    position: absolute;
+    bottom: 4%; /* Adjust this percentage to slide the text up or down over the video */
+    left: 50%;
+    transform: translateX(-50%); /* This keeps everything perfectly centered */
+    width: 100%;
+    max-width: 900px;
+    z-index: 10; /* Ensures the text is strictly on top of the media */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 30px; /* Keeps text from touching the screen edges on mobile */
+}
     .hero-title{
-        font-size:22px;
+        font-size:20px;
         color:#fff;
         text-transform:uppercase;
         letter-spacing:3px;
         font-weight:300;
         margin:0;
-        padding:6px 0;
+        padding:0px 0 0px 0;
         -webkit-font-smoothing:antialiased;
         font-family:'Poppins', 'Orbitron', sans-serif;
     }
-    .register-button{display:inline-block;margin-top:14px;padding:10px 20px;background:#0b74ff;color:#fff;border-radius:8px;text-decoration:none;border:none;font-weight:600;}
+
+    
+    .register-button{display:inline-block;margin-top:24px;padding:10px 20px;background:#0b74ff;color:#fff;border-radius:8px;text-decoration:none;border:none;font-weight:600;}
     .card-title{font-family:'Orbitron', 'Poppins', sans-serif;font-weight:700;letter-spacing:1px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.6);} 
     @media (max-width:900px){
         .video-hero .hero-gif{max-width:92%;max-height:48vh;border-radius:8px}
@@ -55,10 +71,48 @@
         .video-hero{padding:24px 12px;}
         .hero-title{font-size:16px}
     }
+
+
+/* --- ULTIMATE MOBILE SPACING FIX --- */
+@media (max-width: 768px) {
+    /* 1. Push the entire hero section down so the navbar doesn't cover it */
+    .video-hero {
+        padding-top: 60px !important; 
+        height: auto !important;
+        justify-content: flex-start !important;
+    }
+
+    /* 2. Take the text out of "overlap mode" so it sits safely UNDER the logo */
+    .hero-caption {
+        position: relative !important; 
+        bottom: auto !important;
+        left: auto !important;
+        transform: none !important;
+        margin-top: 0px !important;
+        padding-bottom: 10px !important;
+    }
+
+    /* 3. Shrink the text slightly and give it breathing room */
+    .hero-title {
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+        padding: 0px 0 5px 0 !important;
+        letter-spacing: 2px !important;
+    }
+
+    /* 4. Keep the button neatly spaced */
+    .hero-register {
+        margin-top: 10px !important;
+    }
+}
+
     </style>
 </head>
 <body>
 
+
+
+    
 <!-- NAVIGATION BAR -->
 <nav class="navbar">
     <div class="navbar-container">

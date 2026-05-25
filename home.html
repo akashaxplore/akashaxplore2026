@@ -9,13 +9,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="Images\favicon.png">
 <style>
-.video-hero{position:relative;height:50vh;overflow:hidden;}
-.video-hero .hero-gif{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transform-origin:center;transform:scale(0.95);}
-.hero-overlay{position:absolute;left:0;right:0;bottom:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:40px 20px 120px;background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 40%);pointer-events:auto;}
-.hero-overlay .hero-title{font-size:24px;padding:8px 16px;color:#fff;text-transform:uppercase;letter-spacing:1px;text-shadow:0 6px 18px rgba(0,0,0,0.6);opacity:1;}
-.scroll-cta{margin-top:16px;padding:12px 24px;border-radius:8px;border:none;background:#111;color:#fff;cursor:pointer;z-index:21;pointer-events:auto;border:1px solid rgba(255,255,255,0.08);} 
-.card-title{font-family:'Orbitron', 'Poppins', sans-serif;font-weight:700;letter-spacing:1px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.6);} 
-</style>
+    .video-hero{
+        position:relative;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        padding:40px 20px;
+        background:transparent;
+        height:auto; /* allow content-driven height so GIF can be sized */
+    }
+    .hero-media-wrapper{width:100%;display:flex;justify-content:center;}
+    .video-hero .hero-gif{
+        width:100%;
+        max-width:720px;
+        max-height:60vh; /* keep GIF visually smaller on large screens */
+        height:auto;
+        object-fit:contain;
+        z-index:0;
+        transform-origin:center;
+        transform:scale(1);
+        border-radius:12px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.25);
+        background:transparent;
+    }
+    .hero-caption{margin-top:20px;text-align:center;max-width:900px;padding:0 10px;}
+    .hero-title{
+        font-size:22px;
+        color:#fff;
+        text-transform:uppercase;
+        letter-spacing:3px;
+        font-weight:300;
+        margin:0;
+        padding:6px 0;
+        -webkit-font-smoothing:antialiased;
+        font-family:'Poppins', 'Orbitron', sans-serif;
+    }
+    .register-button{display:inline-block;margin-top:14px;padding:10px 20px;background:#0b74ff;color:#fff;border-radius:8px;text-decoration:none;border:none;font-weight:600;}
+    .card-title{font-family:'Orbitron', 'Poppins', sans-serif;font-weight:700;letter-spacing:1px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.6);} 
+    @media (max-width:900px){
+        .video-hero .hero-gif{max-width:92%;max-height:48vh;border-radius:8px}
+        .hero-title{font-size:18px}
+    }
+    @media (max-width:600px){
+        .video-hero{padding:24px 12px;}
+        .hero-title{font-size:16px}
+    }
+    </style>
 </head>
 <body>
 
@@ -38,11 +78,13 @@
 </div>
 
 
-<section class="video-hero" aria-label="Intro video" id="heroSection">
-    <img id="heroGif" src="Video\Logo_with_glowing_pulse_202605171356-ezgif.com-optimize.gif" alt="Akasha Xplore hero" class="hero-gif" loading="eager" />
-    <div class="hero-overlay">
-        <div class="hero-title">Annual Astronomy Day of Dharmapala Vidyala Pannipitiya</div>
-        <button class="scroll-cta" id="scrollToContent" type="button" aria-label="Scroll to registration section">Register</button>
+<section class="video-hero" aria-label="Intro media" id="heroSection">
+    <div class="hero-media-wrapper">
+        <img id="heroGif" src="Video\Logo_with_glowing_pulse_202605171356-ezgif.com-optimize.gif" alt="Akasha Xplore hero" class="hero-gif" loading="eager" />
+    </div>
+    <div class="hero-caption">
+        <div class="hero-title">Annual Astronomy Day of Dharmapala Vidyalaya, Pannipitiya</div>
+        <button class="scroll-cta hero-register" id="scrollToContent">REGISTER</button>
     </div>
 </section>
 
@@ -268,42 +310,61 @@ const carouselIndicators = document.getElementById("carouselIndicators");
 
 let carouselCurrent = 0;
 let autoPlayInterval = null;
-
 const carouselDataSet = [
     {
-        image: "kx.s u,a,s ,nk bßog oyï mdi,a tkfldg Thdf. wïuj;a talalka tkak¡¡¡.png",
-        title: "Dandumonara 2026 ",
-        description: " Inter-School Water Rocket Competition 2026 - Where young innovators launch beyond limits.",
-        date: "4 Jan 2026",
-        url: "https://example.com/register1"
+        image: "Images\\dadu.jpeg",
+        title: "Dandumonara 2026",
+        description: "Inter-School Water Rocket Competition 2026 - Where young innovators launch beyond limits.",
+        date: "2026-01-04T09:00:00Z",
+        url: "https://forms.gle/tN83qLReXNAUUMzi9",
+        rulesUrl: "https://docs.google.com/document/d/1Xo9n8sQGqj3l2k0vZt7a8b9c6d5e4f3g2h1i0j/edit?usp=sharing"
     },
     {
-        image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
+        image: "Images\\lumora.jpeg",
         title: "Lumora 2026",
         description: "Inter-School Astro Photography Competition 2026 - Capture the beauty beyond the stars.",
-        date: "5 Jan 2026",
-        url: "https://example.com/register2"
+        date: "2026-01-05T09:00:00Z",
+        url: "https://forms.gle/XWignNSZweAbQ3vy6",
+        rulesUrl: "https://docs.google.com/document/d/1Xo9n8sQGqj3l2k0vZt7a8b9c6d5e4f3g2h1i0j/edit?usp=sharing"
     },
     {
-        image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop",
+        image: "Images\\quasar.jpeg",
         title: "QUASAR 2026",
-        description: "Inter-School Astro Quiz Competition 2026 - Challenge your knowledge beyond the stars..",
-        date: "6 Jan 2026",
-        url: "https://example.com/register3"
+        description: "Inter-School Astro Quiz Competition 2026 - Challenge your knowledge beyond the stars.",
+        date: "2026-01-06T09:00:00Z",
+        url: "https://forms.gle/xjL37yFq11N5qyHX8",
+        rulesUrl: "https://docs.google.com/document/d/1Xo9n8sQGqj3l2k0vZt7a8b9c6d5e4f3h1i0j/edit?usp=sharing"
     },
     {
         image: "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?q=80&w=1200&auto=format&fit=crop",
         title: "Cosmic Stage 2026",
         description: "Inter-School Astro Presentation Competition 2026 - Present ideas that reach beyond the universe.",
-        date: "7 Jan 2026",
-        url: "https://example.com/register4"
-    },
-    
-       
-    
+        date: "2026-01-07T09:00:00Z",
+        url: "https://forms.gle/NzLrQ6MP7TrWJ2xN8",
+        rulesUrl: "https://docs.google.com/document/d/1Xo9n8sQGqj3l2k0vZt7a8b9c6d5e4f3h1i0j/edit?usp=sharing"
+    }
 ];
 
+// Default countdown: 13 days 23:59:59 from now for events without a date
+(() => {
+    const defaultMs = (((13 * 24) + 23) * 3600 + 59 * 60 + 59) * 1000; // 13 days + 23:59:59
+    carouselDataSet.forEach(ev => {
+        if (!ev.date) {
+            ev.date = new Date(Date.now() + defaultMs).toISOString();
+            return;
+        }
+        const parsed = new Date(ev.date);
+        if (isNaN(parsed.getTime()) || parsed.getTime() <= Date.now()) {
+            // if provided date is invalid or in the past, set default future date
+            ev.date = new Date(Date.now() + defaultMs).toISOString();
+        } else {
+            ev.date = parsed.toISOString();
+        }
+    });
+})();
+
 function createCarouselCards() {
+    if (!carouselContainer) return;
     carouselContainer.innerHTML = '';
     carouselDataSet.forEach((event, index) => {
         const card = document.createElement('div');
@@ -311,7 +372,7 @@ function createCarouselCards() {
         if (index === carouselCurrent) card.classList.add('active');
         else if (index === (carouselCurrent + 1) % carouselDataSet.length) card.classList.add('next');
         else if (index === (carouselCurrent - 1 + carouselDataSet.length) % carouselDataSet.length) card.classList.add('prev');
-        
+
         card.innerHTML = `
             <img src="${encodeURI(event.image)}" alt="${event.title}" class="card-image" />
             <div class="card-content">
@@ -321,32 +382,33 @@ function createCarouselCards() {
             <div class="card-meta">
                 <div class="meta-item">
                     <span class="meta-label">Closes:</span>
-                    <span class="meta-value">${event.date}</span>
+                    <span class="meta-value">${new Date(event.date).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
             </div>
             <div class="card-countdown" id="countdown-${index}">
                 <div class="countdown-mini">
-                    <span class="countdown-mini-value" data-days="${index}">00</span>
+                    <span class="countdown-mini-value" data-days>00</span>
                     <span class="countdown-mini-label">Days</span>
                 </div>
                 <div class="countdown-mini">
-                    <span class="countdown-mini-value" data-hours="${index}">00</span>
+                    <span class="countdown-mini-value" data-hours>00</span>
                     <span class="countdown-mini-label">Hours</span>
                 </div>
                 <div class="countdown-mini">
-                    <span class="countdown-mini-value" data-minutes="${index}">00</span>
+                    <span class="countdown-mini-value" data-minutes>00</span>
                     <span class="countdown-mini-label">Mins</span>
                 </div>
                 <div class="countdown-mini">
-                    <span class="countdown-mini-value" data-seconds="${index}">00</span>
+                    <span class="countdown-mini-value" data-seconds>00</span>
                     <span class="countdown-mini-label">Secs</span>
                 </div>
             </div>
             <div class="card-buttons">
-                <button class="card-btn rules-btn" onclick="showRules()">Rules</button>
-                <a href="${event.url}" class="card-btn register-btn" target="_blank" rel="noopener">Register</a>
+                ${event.rulesUrl ? `<a href="${event.rulesUrl}" class="card-btn rules-btn" target="_blank" rel="noopener">Rules</a>` : `<button class="card-btn rules-btn" onclick="showRules(${index})">Rules</button>`}
+                ${event.expired ? `<span class="card-btn register-closed">Registration closed</span>` : `<a href="${event.url}" class="card-btn register-btn" target="_blank" rel="noopener">Register</a>`}
             </div>
         `;
+
         carouselContainer.appendChild(card);
     });
 }
@@ -454,6 +516,7 @@ function updateCountdownTimers() {
         
         if (timeRemaining <= 0) {
             updateCountdownDisplay(index, 0, 0, 0, 0);
+            markExpired(index);
             return;
         }
         
@@ -465,6 +528,29 @@ function updateCountdownTimers() {
         updateCountdownDisplay(index, days, hours, minutes, seconds);
     });
 }
+
+    function markExpired(index) {
+        if (!carouselContainer) return;
+        const card = carouselContainer.querySelectorAll('.carousel-card')[index];
+        if (!card) return;
+        if (card.classList.contains('expired')) return;
+        card.classList.add('expired');
+
+        // Replace register link/button with disabled label
+        const register = card.querySelector('.register-btn');
+        if (register) {
+            const disabled = document.createElement('span');
+            disabled.className = 'card-btn register-closed';
+            disabled.textContent = 'Registration closed';
+            register.replaceWith(disabled);
+        }
+
+        // Muted rules button
+        const rules = card.querySelector('.rules-btn');
+        if (rules) rules.classList.add('muted');
+        // Persist expired state so re-render keeps it
+        if (carouselDataSet[index]) carouselDataSet[index].expired = true;
+    }
 
 function updateCountdownDisplay(index, days, hours, minutes, seconds) {
     const countdownContainer = document.getElementById(`countdown-${index}`);
@@ -492,8 +578,11 @@ function resetAutoPlay() {
     autoPlay();
 }
 
-function showRules() {
-    alert("Rules & Regulations\n\n1. All participants must be registered\n2. Follow the code of conduct\n3. Submission deadline is mandatory\n4. Winners will be announced within 7 days\n5. Teams must have 1-5 members");
+function showRules(index) {
+    const ev = carouselDataSet[index] || {};
+    const rules = ev.rules || `1. All participants must be registered\n2. Follow the code of conduct\n3. Submission deadline is mandatory\n4. Winners will be announced within 7 days\n5. Teams must have 1-5 members`;
+    const title = ev.title ? `${ev.title} - Rules & Regulations` : 'Rules & Regulations';
+    alert(`${title}\n\n${rules}`);
 }
 
 if (carouselContainer) {

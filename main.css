@@ -278,6 +278,77 @@ body{
         width:96px;
     }
 
+/* Frosted glass Register button for hero */
+.hero-register{
+    margin-top:18px;
+    height:56px;
+    padding:0 26px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    color:#fff;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    box-shadow:0 6px 18px rgba(11,116,255,0.04), inset 0 1px 0 rgba(255,255,255,0.04);
+    animation:floatY 6s ease-in-out infinite, pulseGlow 3.6s ease-in-out infinite;
+}
+
+.hero-register:hover{
+    transform:translateY(-4px) scale(1.03);
+    box-shadow:0 18px 40px rgba(11,116,255,0.12);
+    background:rgba(255,255,255,0.08);
+}
+
+@keyframes floatY{
+    0%{transform:translateY(0);} 
+    50%{transform:translateY(-6px);} 
+    100%{transform:translateY(0);} 
+}
+
+@keyframes pulseGlow{
+    0%,100%{box-shadow:0 6px 18px rgba(11,116,255,0.04);} 
+    50%{box-shadow:0 12px 30px rgba(11,116,255,0.10);} 
+}
+
+/* Ensure hero caption remains centered and minimal */
+.video-hero .hero-caption{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+
+/* Slightly tighter letter spacing on small screens */
+@media(max-width:600px){
+    .hero-title{letter-spacing:1.2px;font-size:16px}
+    .hero-register{height:48px;padding:0 20px}
+}
+
+/* Desktop / large-screen refinements */
+@media (min-width:1000px) {
+    .hero-title{
+        font-size:44px;
+        letter-spacing:6px;
+        font-weight:300;
+        line-height:1.02;
+        -webkit-font-smoothing:antialiased;
+        -webkit-mask-image: linear-gradient(black 0%, black 78%, transparent 100%);
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 78%, rgba(0,0,0,0) 100%);
+    }
+
+    .hero-register{
+        height:64px;
+        padding:0 32px;
+        font-size:15px;
+        box-shadow:0 20px 50px rgba(11,116,255,0.12), inset 0 1px 0 rgba(255,255,255,0.04);
+        animation-duration:7s, 3.6s;
+    }
+}
+
     .hero-overlay .hero-title{
         font-size:20px;
     }
@@ -852,6 +923,21 @@ body{
     letter-spacing:1px;
 }
 
+/* Expired / closed state for registration */
+.carousel-card.expired{opacity:0.85;filter:grayscale(0.15);}
+.card-btn.register-closed{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 18px;
+    height:40px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.04);
+    color:#d3d3d3;
+    border:1px solid rgba(255,255,255,0.04);
+}
+.card-btn.muted{opacity:0.6;pointer-events:none}
+
 /* NEW CAROUSEL SLIDER - Glassy Cards with Auto-play & Drag */
 
 .carousel-wrapper {
@@ -1257,10 +1343,12 @@ body{
 
 /* Card Buttons */
 .card-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: auto;
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .card-btn {
@@ -1297,12 +1385,15 @@ body{
     border-color: rgba(185,131,255,0.3);
     animation: none;
     margin-top: 0;
-    width: 100%;
-    height: auto;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 11px;
-    letter-spacing: 0.5px;
+    min-width: 140px;
+    height: 44px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-btn.register-btn:hover {

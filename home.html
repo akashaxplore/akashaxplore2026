@@ -6,7 +6,16 @@
 <title>Akasha Xplore 2026</title>
 <link rel="stylesheet" href="main.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="Images\favicon.png">
+<style>
+.video-hero{position:relative;height:50vh;overflow:hidden;}
+.video-hero .hero-gif{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transform-origin:center;transform:scale(0.95);}
+.hero-overlay{position:absolute;left:0;right:0;bottom:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:40px 20px 120px;background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 40%);pointer-events:auto;}
+.hero-overlay .hero-title{font-size:24px;padding:8px 16px;color:#fff;text-transform:uppercase;letter-spacing:1px;text-shadow:0 6px 18px rgba(0,0,0,0.6);opacity:1;}
+.scroll-cta{margin-top:16px;padding:12px 24px;border-radius:8px;border:none;background:#111;color:#fff;cursor:pointer;z-index:21;pointer-events:auto;border:1px solid rgba(255,255,255,0.08);} 
+.card-title{font-family:'Orbitron', 'Poppins', sans-serif;font-weight:700;letter-spacing:1px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.6);} 
+</style>
 </head>
 <body>
 
@@ -30,27 +39,11 @@
 
 
 <section class="video-hero" aria-label="Intro video" id="heroSection">
-
+    <img id="heroGif" src="Video\Logo_with_glowing_pulse_202605171356-ezgif.com-optimize.gif" alt="Akasha Xplore hero" class="hero-gif" loading="eager" />
     <div class="hero-overlay">
-        <div class="hero-title">
-            Annual Astronomy Day of Dharmapala Vidyala Pannipitiya
-        </div>
-
-        <button class="scroll-cta" id="scrollToContent" type="button" aria-label="Scroll to registration section">
-            Register
-        </button>
+        <div class="hero-title">Annual Astronomy Day of Dharmapala Vidyala Pannipitiya</div>
+        <button class="scroll-cta" id="scrollToContent" type="button" aria-label="Scroll to registration section">Register</button>
     </div>
-
-    <video
-        id="heroVideo"
-        autoplay
-        muted
-        playsinline
-        loop
-        preload="auto"
-    >
-        <source src="video/Logo_with_glowing_pulse_202605171356.mp4" type="video/mp4" />
-    </video>
 </section>
 
 <div class="page">
@@ -205,18 +198,16 @@
 
 <script>
 
-const heroVideo = document.getElementById("heroVideo");
-if(heroVideo){
-    heroVideo.muted = true;
+const heroMedia = document.getElementById("heroVideo") || document.getElementById("heroGif");
+if (heroMedia && heroMedia.tagName === 'VIDEO') {
+    heroMedia.muted = true;
     const tryPlay = () => {
-        const p = heroVideo.play();
-        if(p && typeof p.catch === "function"){
-            p.catch(()=>{});
-        }
+        const p = heroMedia.play();
+        if (p && typeof p.catch === "function") p.catch(()=>{});
     };
-    if(document.readyState === "loading"){
-        document.addEventListener("DOMContentLoaded", tryPlay, { once:true });
-    }else{
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", tryPlay, { once: true });
+    } else {
         tryPlay();
     }
 }
@@ -277,46 +268,39 @@ const carouselIndicators = document.getElementById("carouselIndicators");
 
 let carouselCurrent = 0;
 let autoPlayInterval = null;
-let isDragging = false;
-let dragStartX = 0;
-let dragOffset = 0;
 
 const carouselDataSet = [
     {
         image: "kx.s u,a,s ,nk bßog oyï mdi,a tkfldg Thdf. wïuj;a talalka tkak¡¡¡.png",
-        title: "DEV{thon} 3.0",
-        description: "24-hour hackathon bringing together innovators and developers.",
+        title: "Dandumonara 2026 ",
+        description: " Inter-School Water Rocket Competition 2026 - Where young innovators launch beyond limits.",
         date: "4 Jan 2026",
         url: "https://example.com/register1"
     },
     {
         image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
-        title: "School Category Open",
-        description: "Special competition for school students. Show your talents!",
+        title: "Lumora 2026",
+        description: "Inter-School Astro Photography Competition 2026 - Capture the beauty beyond the stars.",
         date: "5 Jan 2026",
         url: "https://example.com/register2"
     },
     {
         image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop",
-        title: "Official Knowledge Partner",
-        description: "Partnership with industry leaders. Mentorship included.",
+        title: "QUASAR 2026",
+        description: "Inter-School Astro Quiz Competition 2026 - Challenge your knowledge beyond the stars..",
         date: "6 Jan 2026",
         url: "https://example.com/register3"
     },
     {
         image: "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?q=80&w=1200&auto=format&fit=crop",
-        title: "Creative UI Challenge",
-        description: "Design challenge for frontend enthusiasts. Win prizes!",
+        title: "Cosmic Stage 2026",
+        description: "Inter-School Astro Presentation Competition 2026 - Present ideas that reach beyond the universe.",
         date: "7 Jan 2026",
         url: "https://example.com/register4"
     },
-    {
-        image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
-        title: "Final Countdown",
-        description: "Last chance to register. Limited spots available now!",
-        date: "8 Jan 2026",
-        url: "https://example.com/register5"
-    }
+    
+       
+    
 ];
 
 function createCarouselCards() {
@@ -378,28 +362,88 @@ function createIndicators() {
     });
 }
 
-function updateCarousel() {
+function updateCarousel(direction) {
+    // Rebuild carousel and play entry animation based on direction ('next'|'prev'|undefined)
+    if (!carouselContainer) return;
     createCarouselCards();
     createIndicators();
     updateCountdownTimers();
+
+    const newActive = carouselContainer.querySelector('.carousel-card.active');
+    if (!newActive) return;
+    // cleanup any lingering animation classes
+    newActive.classList.remove('slide-in-left','slide-in-right','slide-out-left','slide-out-right');
+
+    if (direction === 'next') {
+        newActive.classList.add('slide-in-right');
+    } else if (direction === 'prev') {
+        newActive.classList.add('slide-in-left');
+    } else {
+        // ensure visible when no direction provided
+        newActive.style.opacity = '1';
+    }
+
+    // remove animation classes after finished to keep DOM clean
+    setTimeout(() => {
+        newActive.classList.remove('slide-in-left','slide-in-right');
+    }, 600);
 }
 
 function nextSlide() {
-    carouselCurrent = (carouselCurrent + 1) % carouselDataSet.length;
-    updateCarousel();
-    resetAutoPlay();
+    if (!carouselContainer) {
+        carouselCurrent = (carouselCurrent + 1) % carouselDataSet.length;
+        updateCarousel('next');
+        resetAutoPlay();
+        return;
+    }
+    const currentCard = carouselContainer.querySelector('.carousel-card.active');
+    if (currentCard) {
+        currentCard.classList.remove('slide-in-left','slide-in-right','slide-out-left','slide-out-right');
+        currentCard.classList.add('slide-out-left');
+    }
+    setTimeout(() => {
+        carouselCurrent = (carouselCurrent + 1) % carouselDataSet.length;
+        updateCarousel('next');
+        resetAutoPlay();
+    }, 420);
 }
 
 function prevSlide() {
-    carouselCurrent = (carouselCurrent - 1 + carouselDataSet.length) % carouselDataSet.length;
-    updateCarousel();
-    resetAutoPlay();
+    if (!carouselContainer) {
+        carouselCurrent = (carouselCurrent - 1 + carouselDataSet.length) % carouselDataSet.length;
+        updateCarousel('prev');
+        resetAutoPlay();
+        return;
+    }
+    const currentCard = carouselContainer.querySelector('.carousel-card.active');
+    if (currentCard) {
+        currentCard.classList.remove('slide-in-left','slide-in-right','slide-out-left','slide-out-right');
+        currentCard.classList.add('slide-out-right');
+    }
+    setTimeout(() => {
+        carouselCurrent = (carouselCurrent - 1 + carouselDataSet.length) % carouselDataSet.length;
+        updateCarousel('prev');
+        resetAutoPlay();
+    }, 420);
 }
 
 function goToSlide(index) {
-    carouselCurrent = index;
-    updateCarousel();
-    resetAutoPlay();
+    if (index === carouselCurrent) return;
+    const total = carouselDataSet.length;
+    const diff = (index - carouselCurrent + total) % total;
+    const direction = diff === 0 ? null : (diff <= total/2 ? 'next' : 'prev');
+
+    const currentCard = carouselContainer.querySelector('.carousel-card.active');
+    if (currentCard) {
+        currentCard.classList.remove('slide-in-left','slide-in-right','slide-out-left','slide-out-right');
+        currentCard.classList.add(direction === 'next' ? 'slide-out-left' : 'slide-out-right');
+    }
+
+    setTimeout(() => {
+        carouselCurrent = index;
+        updateCarousel(direction);
+        resetAutoPlay();
+    }, 420);
 }
 
 function updateCountdownTimers() {
@@ -452,53 +496,83 @@ function showRules() {
     alert("Rules & Regulations\n\n1. All participants must be registered\n2. Follow the code of conduct\n3. Submission deadline is mandatory\n4. Winners will be announced within 7 days\n5. Teams must have 1-5 members");
 }
 
-// Mouse drag functionality
-carouselContainer.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    dragStartX = e.clientX;
-    carouselContainer.style.cursor = 'grabbing';
-});
-
-carouselContainer.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    dragOffset = e.clientX - dragStartX;
-});
-
-carouselContainer.addEventListener('mouseup', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    carouselContainer.style.cursor = 'grab';
+if (carouselContainer) {
+    // Pointer-based interactive drag + tilt (mouse & touch unified)
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslate = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let velocity = 0;
     
-    if (dragOffset > 50) {
-        prevSlide();
-    } else if (dragOffset < -50) {
-        nextSlide();
-    }
-    dragOffset = 0;
-});
-
-carouselContainer.addEventListener('mouseleave', () => {
-    isDragging = false;
-    dragOffset = 0;
-    carouselContainer.style.cursor = 'grab';
-});
-
-// Touch drag functionality for mobile
-let touchStartX = 0;
-carouselContainer.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-});
-
-carouselContainer.addEventListener('touchend', (e) => {
-    const touchEndX = e.changedTouches[0].clientX;
-    const swipeDistance = touchStartX - touchEndX;
+    carouselContainer.addEventListener('pointerdown', (e) => {
+        // Only primary button
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        isDragging = true;
+        startX = e.clientX;
+        lastX = startX;
+        lastTime = performance.now();
+        currentTranslate = 0;
+        velocity = 0;
+        carouselContainer.classList.add('dragging');
+        try { carouselContainer.setPointerCapture(e.pointerId); } catch(err){}
+    });
     
-    if (swipeDistance > 50) {
-        nextSlide();
-    } else if (swipeDistance < -50) {
-        prevSlide();
+    carouselContainer.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        currentTranslate = dx;
+        // move the whole container for a natural feel
+        carouselContainer.style.transform = `translateX(${currentTranslate}px)`;
+    
+        const now = performance.now();
+        velocity = (e.clientX - lastX) / Math.max(1, now - lastTime); // px per ms
+        lastX = e.clientX;
+        lastTime = now;
+    
+        // slight tilt on active card
+        const active = carouselContainer.querySelector('.carousel-card.active');
+        if (active) {
+            const tilt = Math.max(-12, Math.min(12, (dx / carouselContainer.clientWidth) * 20));
+            active.style.setProperty('--tilt', `${tilt}deg`);
+            active.classList.add('tilt');
+        }
+    });
+    
+    function endPointerDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        try { carouselContainer.releasePointerCapture(e.pointerId); } catch(err){}
+        carouselContainer.classList.remove('dragging');
+        // reset visual translate (CSS transition will animate back if necessary)
+        carouselContainer.style.transform = '';
+    
+        const threshold = carouselContainer.clientWidth * 0.16; // 16% width
+        const veloThreshold = 0.6; // px/ms
+    
+        if (Math.abs(currentTranslate) > threshold || Math.abs(velocity) > veloThreshold) {
+            if (currentTranslate < 0 || velocity < -veloThreshold) nextSlide();
+            else prevSlide();
+        } else {
+            // snap back, remove tilt
+            const active = carouselContainer.querySelector('.carousel-card.active');
+            if (active) {
+                active.style.removeProperty('--tilt');
+                active.classList.remove('tilt');
+            }
+        }
+    
+        currentTranslate = 0;
+        velocity = 0;
     }
-});
+    
+    carouselContainer.addEventListener('pointerup', endPointerDrag);
+    carouselContainer.addEventListener('pointercancel', endPointerDrag);
+    carouselContainer.addEventListener('pointerleave', (e) => { if (isDragging) endPointerDrag(e); });
+    
+    // Prevent native dragging of images
+    carouselContainer.querySelectorAll('img').forEach(img => img.draggable = false);
+}
 
 // Event listeners for buttons
 if (carouselPrevBtn) {

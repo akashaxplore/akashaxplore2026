@@ -874,6 +874,15 @@ body{
     justify-content: center;
     cursor: grab;
     user-select: none;
+    perspective: 1200px; /* enable 3D perspective for tilt */
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
+    touch-action: pan-y; /* allow vertical page scroll, handle horizontal drags in JS */
+}
+
+.carousel-container.dragging {
+    transition: none; /* immediate during drag */
+    cursor: grabbing;
 }
 
 .carousel-container:active {
@@ -912,7 +921,7 @@ body{
     flex-direction: column;
     gap: 20px;
     box-shadow: 0 15px 60px rgba(0,0,0,0.3);
-    transition: all 0.6s cubic-bezier(.2,.9,.2,1);
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.7s ease;
     opacity: 0.4;
     transform: scale(0.85) translateY(0);
     pointer-events: none;
@@ -940,16 +949,126 @@ body{
     animation: floatActiveCard 4s ease-in-out 0.6s infinite;
 }
 
-.carousel-card.next {
-    opacity: 0.5;
-    transform: scale(0.9) translateX(200px) translateY(0);
-    z-index: 5;
+/* Enhanced Slide animations for carousel with ultra-smooth easing */
+@keyframes slideInFromRight {
+    0% { 
+        transform: translateX(100%) scale(0.8) rotateY(-25deg); 
+        opacity: 0; 
+    }
+    25% {
+        transform: translateX(75%) scale(0.85) rotateY(-18deg);
+        opacity: 0.25;
+    }
+    50% {
+        transform: translateX(40%) scale(0.92) rotateY(-10deg);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateX(10%) scale(0.98) rotateY(-2deg);
+        opacity: 0.9;
+    }
+    100% { 
+        transform: translateX(0) scale(1) rotateY(0deg); 
+        opacity: 1; 
+    }
 }
 
-.carousel-card.prev {
-    opacity: 0.5;
-    transform: scale(0.9) translateX(-200px) translateY(0);
-    z-index: 5;
+@keyframes slideInFromLeft {
+    0% { 
+        transform: translateX(-100%) scale(0.8) rotateY(25deg); 
+        opacity: 0; 
+    }
+    25% {
+        transform: translateX(-75%) scale(0.85) rotateY(18deg);
+        opacity: 0.25;
+    }
+    50% {
+        transform: translateX(-40%) scale(0.92) rotateY(10deg);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateX(-10%) scale(0.98) rotateY(2deg);
+        opacity: 0.9;
+    }
+    100% { 
+        transform: translateX(0) scale(1) rotateY(0deg); 
+        opacity: 1; 
+    }
+}
+
+@keyframes slideOutToLeft {
+    0% { 
+        transform: translateX(0) scale(1) rotateY(0deg); 
+        opacity: 1; 
+    }
+    25% {
+        transform: translateX(-10%) scale(0.98) rotateY(2deg);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translateX(-40%) scale(0.92) rotateY(10deg);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateX(-75%) scale(0.85) rotateY(18deg);
+        opacity: 0.25;
+    }
+    100% { 
+        transform: translateX(-100%) scale(0.8) rotateY(25deg); 
+        opacity: 0; 
+    }
+}
+
+@keyframes slideOutToRight {
+    0% { 
+        transform: translateX(0) scale(1) rotateY(0deg); 
+        opacity: 1; 
+    }
+    25% {
+        transform: translateX(10%) scale(0.98) rotateY(-2deg);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translateX(40%) scale(0.92) rotateY(-10deg);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateX(75%) scale(0.85) rotateY(-18deg);
+        opacity: 0.25;
+    }
+    100% { 
+        transform: translateX(100%) scale(0.8) rotateY(-25deg); 
+        opacity: 0; 
+    }
+}
+
+.carousel-card.slide-in-right { animation: slideInFromRight 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; z-index: 11; pointer-events: auto; }
+.carousel-card.slide-in-left  { animation: slideInFromLeft  1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; z-index: 11; pointer-events: auto; }
+.carousel-card.slide-out-left { animation: slideOutToLeft  0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; z-index: 9; pointer-events: none; }
+.carousel-card.slide-out-right{ animation: slideOutToRight 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; z-index: 9; pointer-events: none; }
+
+/* 3D tilt and responsive stack */
+.carousel-card {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease, box-shadow 0.6s ease;
+}
+
+.carousel-card.tilt { transform: translateZ(0) rotateY(var(--tilt,0deg)) scale(var(--scale,1)); }
+
+@media (min-width: 1000px) {
+    .carousel-card.prev { transform: translateX(-220px) translateZ(-80px) rotateY(10deg) scale(0.9); opacity:0.62; }
+    .carousel-card.next { transform: translateX(220px) translateZ(-80px) rotateY(-10deg) scale(0.9); opacity:0.62; }
+}
+
+@media (max-width: 999px) {
+    .carousel-card.prev { transform: translateX(-150px) scale(0.88); opacity:0.68; }
+    .carousel-card.next { transform: translateX(150px) scale(0.88); opacity:0.68; }
+}
+
+@media (max-width: 480px) {
+    .carousel-container { perspective: 600px; }
+    .carousel-card { transition-duration: 0.45s; }
 }
 
 @media(max-width:1200px){
@@ -1006,11 +1125,16 @@ body{
     overflow: hidden;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s cubic-bezier(.2,.9,.2,1);
+    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.6s ease;
 }
 
 .carousel-card.active .card-image {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    filter: brightness(1.1);
+}
+
+.carousel-card.active .card-image:hover {
+    transform: scale(1.12);
 }
 
 /* Card Content */
@@ -1949,12 +2073,18 @@ body{
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 20px;
     transition: transform 0.8s ease, filter 0.4s ease;
 }
 
 .gallery-item:hover img {
     transform: scale(1.05);
     filter: brightness(1.1);
+}
+
+.gallery-slide {
+    border-radius: 24px;
+    overflow: hidden;
 }
 
 @media(max-width:768px){

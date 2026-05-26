@@ -1,4 +1,4 @@
-const text = "ONE OF A LARGEST ASTRONOMY INITIATIVE IN SRI LANKA";
+const text = "ONE OF THE LARGEST ASTRONOMY INITIATIVES IN SRI LANKA";
 const textContainer = document.getElementById("text");
 const logo = document.getElementById("logo");
 

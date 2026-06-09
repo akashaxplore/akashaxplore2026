@@ -929,5 +929,156 @@ if(gallerySlider && nextGalleryBtn && prevGalleryBtn){
     </div>
 </footer>
 
+<!-- REGISTRATION DEADLINE TIMER LIGHTBOX -->
+<div id="timerLightbox" class="timer-lightbox">
+    <div class="timer-lightbox-backdrop"></div>
+    <div class="timer-lightbox-content">
+        <button class="timer-lightbox-close" id="timerCloseBtn" aria-label="Close timer">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        
+        <div class="timer-lightbox-header">
+            <h2 class="timer-lightbox-title">⏳ TIME IS RUNNING OUT!</h2>
+            <p class="timer-lightbox-subtitle">Competition Registration Deadline</p>
+        </div>
+        
+        <div class="registration-timer">
+            <div class="timer-label">REGISTRATION CLOSES IN</div>
+            <div class="timer-display">
+                <span class="timer-unit">
+                    <span class="timer-value" id="timerDays">00</span>
+                    <span class="timer-label-small">Days</span>
+                </span>
+                <span class="timer-separator">:</span>
+                <span class="timer-unit">
+                    <span class="timer-value" id="timerHours">00</span>
+                    <span class="timer-label-small">Hours</span>
+                </span>
+                <span class="timer-separator">:</span>
+                <span class="timer-unit">
+                    <span class="timer-value" id="timerMinutes">00</span>
+                    <span class="timer-label-small">Minutes</span>
+                </span>
+                <span class="timer-separator">:</span>
+                <span class="timer-unit">
+                    <span class="timer-value" id="timerSeconds">00</span>
+                    <span class="timer-label-small">Seconds</span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="timer-lightbox-cta">
+            <button class="timer-register-btn" id="timerRegisterBtn">REGISTER NOW</button>
+            <button class="timer-dismiss-btn" id="timerDismissBtn">LATER</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// INTERACTIVE COUNTDOWN TIMER LIGHTBOX
+function initializeTimerLightbox() {
+    // Set the timer to registration deadline: June 10, 2026 at 06:30 UTC
+    const timerEndDate = new Date('2026-06-10T06:30:00Z');
+    
+    const timerLightbox = document.getElementById('timerLightbox');
+    const timerCloseBtn = document.getElementById('timerCloseBtn');
+    const timerDismissBtn = document.getElementById('timerDismissBtn');
+    const timerRegisterBtn = document.getElementById('timerRegisterBtn');
+    const scrollToContent = document.getElementById('scrollToContent');
+    
+    function updateTimer() {
+        const now = new Date().getTime();
+        const endTime = timerEndDate.getTime();
+        const timeLeft = endTime - now;
+        
+        if (timeLeft <= 0) {
+            // Timer expired
+            document.getElementById('timerDays').textContent = '00';
+            document.getElementById('timerHours').textContent = '00';
+            document.getElementById('timerMinutes').textContent = '00';
+            document.getElementById('timerSeconds').textContent = '00';
+            document.querySelector('.registration-timer').style.opacity = '0.5';
+            return;
+        }
+        
+        // Calculate time units
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        // Format with leading zeros
+        const formatTime = (time) => String(time).padStart(2, '0');
+        
+        // Update DOM
+        const daysElement = document.getElementById('timerDays');
+        const hoursElement = document.getElementById('timerHours');
+        const minutesElement = document.getElementById('timerMinutes');
+        const secondsElement = document.getElementById('timerSeconds');
+        
+        // Add pulse animation to seconds on change
+        if (secondsElement.textContent !== formatTime(seconds)) {
+            secondsElement.classList.remove('pulse');
+            void secondsElement.offsetWidth; // Trigger reflow to restart animation
+            secondsElement.classList.add('pulse');
+        }
+        
+        daysElement.textContent = formatTime(days);
+        hoursElement.textContent = formatTime(hours);
+        minutesElement.textContent = formatTime(minutes);
+        secondsElement.textContent = formatTime(seconds);
+    }
+    
+    function closeTimer() {
+        timerLightbox.classList.remove('active');
+    }
+    
+    function openTimer() {
+        timerLightbox.classList.add('active');
+    }
+    
+    // Update immediately
+    updateTimer();
+    
+    // Update every second
+    setInterval(updateTimer, 1000);
+    
+    // Event listeners for close buttons
+    timerCloseBtn.addEventListener('click', closeTimer);
+    timerDismissBtn.addEventListener('click', closeTimer);
+    
+    // Register button scrolls to registration section
+    timerRegisterBtn.addEventListener('click', () => {
+        closeTimer();
+        if (scrollToContent) {
+            scrollToContent.click();
+        }
+    });
+    
+    // Close on backdrop click
+    document.querySelector('.timer-lightbox-backdrop').addEventListener('click', closeTimer);
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && timerLightbox.classList.contains('active')) {
+            closeTimer();
+        }
+    });
+    
+    // Show lightbox on every page load/refresh
+    openTimer();
+}
+
+// Initialize timer when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeTimerLightbox);
+} else {
+    initializeTimerLightbox();
+}
+</script>
+
 </body>
 </html>

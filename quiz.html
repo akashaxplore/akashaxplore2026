@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AkashaXplore - Quiz Portal</title>
+    <link rel="stylesheet" href="quiz.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="Images/favicon.png">
+</head>
+<body>
+    <div class="quiz-container">
+        <!-- Header -->
+        <header class="quiz-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 class="quiz-title">AkashaXplore</h1>
+                    <p class="quiz-subtitle">Online Quiz Portal 2026</p>
+                </div>
+                <div class="header-actions">
+                    <button class="back-btn" onclick="goHome()">← Back to Home</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Session Status & Timer Section -->
+        <section class="session-section glass-card">
+            <div class="session-content">
+                <div class="session-status">
+                    <div class="status-indicator" id="statusIndicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text" id="statusText">Session Starting Soon</span>
+                    </div>
+                    <p class="session-info" id="sessionInfo">Quiz session will start at: <strong id="startTime">01:00</strong></p>
+                </div>
+
+                <!-- Session Timer -->
+                <div class="session-timer-wrapper">
+                    <div class="timer-card">
+                        <h3 class="timer-label">Session Starts In</h3>
+                        <div class="timer-display" id="sessionTimer">
+                            <span class="timer-value" id="timerHours">00</span>
+                            <span class="timer-separator">:</span>
+                            <span class="timer-value" id="timerMinutes">01</span>
+                            <span class="timer-separator">:</span>
+                            <span class="timer-value" id="timerSeconds">00</span>
+                        </div>
+                        <p class="timer-hint">Time until quiz begins</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Left Column: Rules & Question Paper -->
+            <div class="left-column">
+                <!-- Rules & Regulations Section -->
+                <section class="rules-section glass-card">
+                    <div class="section-header" onclick="toggleRules()">
+                        <h2 class="section-title">📋 Rules & Regulations</h2>
+                        <span class="toggle-icon" id="rulesToggle">▼</span>
+                    </div>
+                    <div class="section-content" id="rulesContent">
+                        <div class="rules-grid">
+                            <div class="rule-item">
+                                <span class="rule-number">1</span>
+                                <p>Read all questions carefully before answering.</p>
+                            </div>
+                            <div class="rule-item">
+                                <span class="rule-number">2</span>
+                                <p>Do not refresh the page during the quiz. Your progress may be lost.</p>
+                            </div>
+                            <div class="rule-item">
+                                <span class="rule-number">3</span>
+                                <p>MCQ answers are submitted automatically. Click "Select" to choose your answer.</p>
+                            </div>
+                            <div class="rule-item">
+                                <span class="rule-number">4</span>
+                                <p>Essay submissions must be made via Google Drive link before time runs out.</p>
+                            </div>
+                            <div class="rule-item">
+                                <span class="rule-number">5</span>
+                                <p>Ensure your Google Drive link has proper sharing permissions.</p>
+                            </div>
+                            <div class="rule-item">
+                                <span class="rule-number">6</span>
+                                <p>Internet connection is required. Maintain stable connectivity throughout.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Question Paper Section -->
+                <section class="question-paper-section glass-card">
+                    <div class="section-header">
+                        <h2 class="section-title">📄 Question Paper</h2>
+                    </div>
+                    <div class="section-content" id="questionPaperContent">
+                        <div class="not-started-message">
+                            <div class="message-icon">⏱️</div>
+                            <h3>Quiz Session Not Started</h3>
+                            <p>Question paper will be available once the quiz session begins.</p>
+                            <p class="countdown-hint" id="countdownHint"></p>
+                        </div>
+                    </div>
+
+                    <!-- Questions will be rendered here when session starts -->
+                    <div id="questionsContainer" class="questions-container" style="display: none;"></div>
+                </section>
+            </div>
+
+            <!-- Right Column: Essay Submission & Quiz Timer -->
+            <div class="right-column">
+                <!-- Quiz Timer Section (Active during quiz) -->
+                <section class="quiz-timer-section glass-card" id="quizTimerSection" style="display: none;">
+                    <div class="section-header">
+                        <h2 class="section-title">⏱️ Quiz Timer</h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="quiz-timer-display" id="quizTimerDisplay">
+                            <span class="quiz-timer-value" id="quizHours">01</span>
+                            <span class="quiz-timer-separator">:</span>
+                            <span class="quiz-timer-value" id="quizMinutes">30</span>
+                            <span class="quiz-timer-separator">:</span>
+                            <span class="quiz-timer-value" id="quizSeconds">00</span>
+                        </div>
+                        <div class="timer-progress" id="timerProgress" style="width: 100%;"></div>
+                        <p class="timer-status" id="timerStatus">Quiz in progress</p>
+                    </div>
+                </section>
+
+                <!-- Essay Submission Section -->
+                <section class="essay-section glass-card">
+                    <div class="section-header">
+                        <h2 class="section-title">📝 Essay Submission</h2>
+                    </div>
+                    <div class="section-content">
+                        <form class="essay-form" id="essayForm" onsubmit="submitEssay(event)">
+                            <div class="form-group">
+                                <label for="studentName">Student Name *</label>
+                                <input 
+                                    type="text" 
+                                    id="studentName" 
+                                    placeholder="Enter your full name" 
+                                    required
+                                    class="form-input"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="studentEmail">Email Address *</label>
+                                <input 
+                                    type="email" 
+                                    id="studentEmail" 
+                                    placeholder="your.email@example.com" 
+                                    required
+                                    class="form-input"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="rollNumber">Roll Number (Optional)</label>
+                                <input 
+                                    type="text" 
+                                    id="rollNumber" 
+                                    placeholder="Enter your roll number" 
+                                    class="form-input"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="essayLink">Google Drive Link *</label>
+                                <input 
+                                    type="url" 
+                                    id="essayLink" 
+                                    placeholder="https://docs.google.com/..." 
+                                    required
+                                    class="form-input"
+                                    pattern="https://docs\.google\.com/.*"
+                                >
+                                <small class="form-hint">📌 Must be a Google Drive link with sharing enabled</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="essayNotes">Additional Notes (Optional)</label>
+                                <textarea 
+                                    id="essayNotes" 
+                                    placeholder="Add any notes or comments..." 
+                                    rows="4"
+                                    class="form-input"
+                                ></textarea>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="submit-btn" id="submitBtn">
+                                    📤 Submit Essay
+                                </button>
+                                <button type="reset" class="reset-btn">
+                                    🔄 Clear Form
+                                </button>
+                            </div>
+
+                            <div class="form-message" id="formMessage"></div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Submission Status -->
+                <section class="submission-status glass-card" id="submissionStatus" style="display: none;">
+                    <div class="section-header">
+                        <h2 class="section-title">✓ Submission Status</h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="status-details" id="statusDetails"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="quiz-footer">
+        <p>&copy; 2026 AkashaXplore. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
+    </footer>
+
+    <script src="quiz-app.js"></script>
+</body>
+</html>

@@ -980,103 +980,143 @@ if(gallerySlider && nextGalleryBtn && prevGalleryBtn){
 <script>
 // INTERACTIVE COUNTDOWN TIMER LIGHTBOX
 function initializeTimerLightbox() {
-    // Set the timer to registration deadline: June 10, 2026 at 06:30 UTC
-    const timerEndDate = new Date('2026-06-10T06:30:00Z');
-    
-    const timerLightbox = document.getElementById('timerLightbox');
-    const timerCloseBtn = document.getElementById('timerCloseBtn');
-    const timerDismissBtn = document.getElementById('timerDismissBtn');
-    const timerRegisterBtn = document.getElementById('timerRegisterBtn');
-    const scrollToContent = document.getElementById('scrollToContent');
-    
-    function updateTimer() {
-        const now = new Date().getTime();
-        const endTime = timerEndDate.getTime();
-        const timeLeft = endTime - now;
+    try {
+        // Set the timer to registration deadline: June 10, 2026 at 06:30 UTC
+        const timerEndDate = new Date('2026-06-10T06:30:00Z');
         
-        if (timeLeft <= 0) {
-            // Timer expired
-            document.getElementById('timerDays').textContent = '00';
-            document.getElementById('timerHours').textContent = '00';
-            document.getElementById('timerMinutes').textContent = '00';
-            document.getElementById('timerSeconds').textContent = '00';
-            document.querySelector('.registration-timer').style.opacity = '0.5';
+        // Get all required DOM elements with null checks
+        const timerLightbox = document.getElementById('timerLightbox');
+        if (!timerLightbox) {
+            console.warn('Timer lightbox element not found');
             return;
         }
         
-        // Calculate time units
-        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        const timerCloseBtn = document.getElementById('timerCloseBtn');
+        const timerDismissBtn = document.getElementById('timerDismissBtn');
+        const timerRegisterBtn = document.getElementById('timerRegisterBtn');
+        const scrollToContent = document.getElementById('scrollToContent');
+        const timerBackdrop = document.querySelector('.timer-lightbox-backdrop');
+        const registrationTimer = document.querySelector('.registration-timer');
         
-        // Format with leading zeros
-        const formatTime = (time) => String(time).padStart(2, '0');
-        
-        // Update DOM
-        const daysElement = document.getElementById('timerDays');
-        const hoursElement = document.getElementById('timerHours');
-        const minutesElement = document.getElementById('timerMinutes');
-        const secondsElement = document.getElementById('timerSeconds');
-        
-        // Add pulse animation to seconds on change
-        if (secondsElement.textContent !== formatTime(seconds)) {
-            secondsElement.classList.remove('pulse');
-            void secondsElement.offsetWidth; // Trigger reflow to restart animation
-            secondsElement.classList.add('pulse');
+        // Check for critical elements
+        if (!timerCloseBtn || !timerDismissBtn || !timerRegisterBtn || !timerBackdrop) {
+            console.warn('Some timer button elements not found');
+            return;
         }
         
-        daysElement.textContent = formatTime(days);
-        hoursElement.textContent = formatTime(hours);
-        minutesElement.textContent = formatTime(minutes);
-        secondsElement.textContent = formatTime(seconds);
-    }
-    
-    function closeTimer() {
-        timerLightbox.classList.remove('active');
-    }
-    
-    function openTimer() {
-        timerLightbox.classList.add('active');
-    }
-    
-    // Update immediately
-    updateTimer();
-    
-    // Update every second
-    setInterval(updateTimer, 1000);
-    
-    // Event listeners for close buttons
-    timerCloseBtn.addEventListener('click', closeTimer);
-    timerDismissBtn.addEventListener('click', closeTimer);
-    
-    // Register button scrolls to registration section
-    timerRegisterBtn.addEventListener('click', () => {
-        closeTimer();
-        if (scrollToContent) {
-            scrollToContent.click();
+        function updateTimer() {
+            try {
+                const now = new Date().getTime();
+                const endTime = timerEndDate.getTime();
+                const timeLeft = endTime - now;
+                
+                const daysElement = document.getElementById('timerDays');
+                const hoursElement = document.getElementById('timerHours');
+                const minutesElement = document.getElementById('timerMinutes');
+                const secondsElement = document.getElementById('timerSeconds');
+                
+                if (!daysElement || !hoursElement || !minutesElement || !secondsElement) {
+                    return;
+                }
+                
+                if (timeLeft <= 0) {
+                    // Timer expired
+                    daysElement.textContent = '00';
+                    hoursElement.textContent = '00';
+                    minutesElement.textContent = '00';
+                    secondsElement.textContent = '00';
+                    if (registrationTimer) {
+                        registrationTimer.style.opacity = '0.5';
+                    }
+                    return;
+                }
+                
+                // Calculate time units
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                // Format with leading zeros
+                const formatTime = (time) => String(time).padStart(2, '0');
+                
+                // Add pulse animation to seconds on change
+                if (secondsElement.textContent !== formatTime(seconds)) {
+                    secondsElement.classList.remove('pulse');
+                    void secondsElement.offsetWidth; // Trigger reflow to restart animation
+                    secondsElement.classList.add('pulse');
+                }
+                
+                daysElement.textContent = formatTime(days);
+                hoursElement.textContent = formatTime(hours);
+                minutesElement.textContent = formatTime(minutes);
+                secondsElement.textContent = formatTime(seconds);
+            } catch (error) {
+                console.error('Error updating timer:', error);
+            }
         }
-    });
-    
-    // Close on backdrop click
-    document.querySelector('.timer-lightbox-backdrop').addEventListener('click', closeTimer);
-    
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && timerLightbox.classList.contains('active')) {
+        
+        function closeTimer() {
+            timerLightbox.classList.remove('active');
+        }
+        
+        function openTimer() {
+            timerLightbox.classList.add('active');
+        }
+        
+        // Update immediately
+        updateTimer();
+        
+        // Update every second
+        setInterval(updateTimer, 1000);
+        
+        // Event listeners for close buttons
+        timerCloseBtn.addEventListener('click', closeTimer);
+        timerDismissBtn.addEventListener('click', closeTimer);
+        
+        // Register button scrolls to registration section
+        timerRegisterBtn.addEventListener('click', () => {
             closeTimer();
-        }
-    });
-    
-    // Show lightbox on every page load/refresh
-    openTimer();
+            if (scrollToContent) {
+                scrollToContent.click();
+            }
+        });
+        
+        // Close on backdrop click
+        timerBackdrop.addEventListener('click', closeTimer);
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && timerLightbox.classList.contains('active')) {
+                closeTimer();
+            }
+        });
+        
+        // Show lightbox on every page load/refresh
+        openTimer();
+    } catch (error) {
+        console.error('Error initializing timer lightbox:', error);
+    }
 }
 
-// Initialize timer when DOM is ready
+// Initialize timer when DOM is ready - use a more reliable approach
+function initTimer() {
+    // Ensure all DOM elements are loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeTimerLightbox);
+    } else {
+        // DOM is already loaded, initialize immediately
+        initializeTimerLightbox();
+    }
+}
+
+// Also add a small delay to ensure everything is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeTimerLightbox);
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initializeTimerLightbox, 100);
+    });
 } else {
-    initializeTimerLightbox();
+    setTimeout(initializeTimerLightbox, 100);
 }
 </script>
 

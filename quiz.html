@@ -1,229 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AkashaXplore - Quiz Portal</title>
-    <link rel="stylesheet" href="quiz.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Quasar 2026 - Quiz Results</title>
+    <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="Images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="Images\favicon.png">
+    <style>
+        /* Base Page Styles */
+        body {
+            background: #05050a;
+            background-image: radial-gradient(circle at 50% 0%, rgba(60, 45, 10, 0.5) 0%, transparent 50%), 
+                              radial-gradient(circle at 50% 100%, rgba(30, 20, 60, 0.5) 0%, transparent 50%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .results-page-container {
+            padding: 140px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* Back to Home Button */
+        .back-btn-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: -30px;
+            position: relative;
+            z-index: 10;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 999px;
+            color: #FFDF00;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            transform: translateX(-5px);
+            color: #fff;
+        }
+
+        /* Animations */
+        @keyframes goldPulse {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15), inset 0 0 15px rgba(255, 215, 0, 0.05); }
+            100% { box-shadow: 0 0 45px rgba(255, 215, 0, 0.4), inset 0 0 25px rgba(255, 215, 0, 0.15); }
+        }
+        @keyframes trophyBounce {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-10px) scale(1.15) rotate(5deg); }
+        }
+        @keyframes shimmerText {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes floatGlow {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Typography */
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(90deg, #FFDF00, #FFF8DC, #D4AF37, #FFDF00);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: shimmerText 3s linear infinite;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            letter-spacing: 2px;
+        }
+        .page-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Glassy Panels */
+        .glass-panel {
+            width: 100%;
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        
+        /* Highlighted Final Quiz Section */
+        .highlight-panel {
+            background: linear-gradient(135deg, rgba(40, 30, 10, 0.85), rgba(15, 10, 25, 0.9));
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            animation: goldPulse 3s infinite alternate;
+        }
+        
+        .highlight-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .section-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .section-badge {
+            padding: 8px 16px;
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            border-radius: 999px;
+            color: #FFDF00;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: center;
+            margin: 0;
+        }
+        .trophy-icon {
+            font-size: 36px;
+            animation: trophyBounce 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+        }
+
+        /* Team Grid Styles */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        .team-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 215, 0, 0.08);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+        
+        .team-medal {
+            font-size: 42px;
+            line-height: 1;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+        }
+        .team-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #FFDF00;
+            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .school-name {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        /* Standard Team List for Phase 1/Announce */
+        .standard-grid {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .standard-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .standard-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .standard-card .team-name {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .standard-card .school-name {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .results-page-container { 
+                padding-top: 110px; 
+                gap: 40px;
+            }
+            .page-title { 
+                font-size: 36px; 
+            }
+            .section-title { 
+                font-size: 24px; 
+                flex-direction: column; 
+                gap: 10px;
+            }
+            .glass-panel { 
+                padding: 30px 20px; 
+            }
+            .back-btn-container {
+                margin-bottom: 0px;
+            }
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <!-- Header -->
-        <header class="quiz-header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <h1 class="quiz-title">AkashaXplore</h1>
-                    <p class="quiz-subtitle">Online Quiz Portal 2026</p>
-                </div>
-                <div class="header-actions">
-                    <button class="back-btn" onclick="goHome()">← Back to Home</button>
-                </div>
-            </div>
-        </header>
 
-        <!-- Session Status & Timer Section -->
-        <section class="session-section glass-card">
-            <div class="session-content">
-                <div class="session-status">
-                    <div class="status-indicator" id="statusIndicator">
-                        <span class="status-dot"></span>
-                        <span class="status-text" id="statusText">Session Starting Soon</span>
-                    </div>
-                    <p class="session-info" id="sessionInfo">Quiz session will start at: <strong id="startTime">01:00</strong></p>
-                </div>
-
-                <!-- Session Timer -->
-                <div class="session-timer-wrapper">
-                    <div class="timer-card">
-                        <h3 class="timer-label">Session Starts In</h3>
-                        <div class="timer-display" id="sessionTimer">
-                            <span class="timer-value" id="timerHours">00</span>
-                            <span class="timer-separator">:</span>
-                            <span class="timer-value" id="timerMinutes">01</span>
-                            <span class="timer-separator">:</span>
-                            <span class="timer-value" id="timerSeconds">00</span>
-                        </div>
-                        <p class="timer-hint">Time until quiz begins</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Main Content Area -->
-        <div class="main-content">
-            <!-- Left Column: Rules & Question Paper -->
-            <div class="left-column">
-                <!-- Rules & Regulations Section -->
-                <section class="rules-section glass-card">
-                    <div class="section-header" onclick="toggleRules()">
-                        <h2 class="section-title">📋 Rules & Regulations</h2>
-                        <span class="toggle-icon" id="rulesToggle">▼</span>
-                    </div>
-                    <div class="section-content" id="rulesContent">
-                        <div class="rules-grid">
-                            <div class="rule-item">
-                                <span class="rule-number">1</span>
-                                <p>Read all questions carefully before answering.</p>
-                            </div>
-                            <div class="rule-item">
-                                <span class="rule-number">2</span>
-                                <p>Do not refresh the page during the quiz. Your progress may be lost.</p>
-                            </div>
-                            <div class="rule-item">
-                                <span class="rule-number">3</span>
-                                <p>MCQ answers are submitted automatically. Click "Select" to choose your answer.</p>
-                            </div>
-                            <div class="rule-item">
-                                <span class="rule-number">4</span>
-                                <p>Essay submissions must be made via Google Drive link before time runs out.</p>
-                            </div>
-                            <div class="rule-item">
-                                <span class="rule-number">5</span>
-                                <p>Ensure your Google Drive link has proper sharing permissions.</p>
-                            </div>
-                            <div class="rule-item">
-                                <span class="rule-number">6</span>
-                                <p>Internet connection is required. Maintain stable connectivity throughout.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Question Paper Section -->
-                <section class="question-paper-section glass-card">
-                    <div class="section-header">
-                        <h2 class="section-title">📄 Question Paper</h2>
-                    </div>
-                    <div class="section-content" id="questionPaperContent">
-                        <div class="not-started-message">
-                            <div class="message-icon">⏱️</div>
-                            <h3>Quiz Session Not Started</h3>
-                            <p>Question paper will be available once the quiz session begins.</p>
-                            <p class="countdown-hint" id="countdownHint"></p>
-                        </div>
-                    </div>
-
-                    <!-- Questions will be rendered here when session starts -->
-                    <div id="questionsContainer" class="questions-container" style="display: none;"></div>
-                </section>
-            </div>
-
-            <!-- Right Column: Essay Submission & Quiz Timer -->
-            <div class="right-column">
-                <!-- Quiz Timer Section (Active during quiz) -->
-                <section class="quiz-timer-section glass-card" id="quizTimerSection" style="display: none;">
-                    <div class="section-header">
-                        <h2 class="section-title">⏱️ Quiz Timer</h2>
-                    </div>
-                    <div class="section-content">
-                        <div class="quiz-timer-display" id="quizTimerDisplay">
-                            <span class="quiz-timer-value" id="quizHours">01</span>
-                            <span class="quiz-timer-separator">:</span>
-                            <span class="quiz-timer-value" id="quizMinutes">30</span>
-                            <span class="quiz-timer-separator">:</span>
-                            <span class="quiz-timer-value" id="quizSeconds">00</span>
-                        </div>
-                        <div class="timer-progress" id="timerProgress" style="width: 100%;"></div>
-                        <p class="timer-status" id="timerStatus">Quiz in progress</p>
-                    </div>
-                </section>
-
-                <!-- Essay Submission Section -->
-                <section class="essay-section glass-card">
-                    <div class="section-header">
-                        <h2 class="section-title">📝 Essay Submission</h2>
-                    </div>
-                    <div class="section-content">
-                        <form class="essay-form" id="essayForm" onsubmit="submitEssay(event)">
-                            <div class="form-group">
-                                <label for="studentName">Student Name *</label>
-                                <input 
-                                    type="text" 
-                                    id="studentName" 
-                                    placeholder="Enter your full name" 
-                                    required
-                                    class="form-input"
-                                >
-                            </div>
-
-                            <div class="form-group">
-                                <label for="studentEmail">Email Address *</label>
-                                <input 
-                                    type="email" 
-                                    id="studentEmail" 
-                                    placeholder="your.email@example.com" 
-                                    required
-                                    class="form-input"
-                                >
-                            </div>
-
-                            <div class="form-group">
-                                <label for="rollNumber">Roll Number (Optional)</label>
-                                <input 
-                                    type="text" 
-                                    id="rollNumber" 
-                                    placeholder="Enter your roll number" 
-                                    class="form-input"
-                                >
-                            </div>
-
-                            <div class="form-group">
-                                <label for="essayLink">Google Drive Link *</label>
-                                <input 
-                                    type="url" 
-                                    id="essayLink" 
-                                    placeholder="https://docs.google.com/..." 
-                                    required
-                                    class="form-input"
-                                    pattern="https://docs\.google\.com/.*"
-                                >
-                                <small class="form-hint">📌 Must be a Google Drive link with sharing enabled</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="essayNotes">Additional Notes (Optional)</label>
-                                <textarea 
-                                    id="essayNotes" 
-                                    placeholder="Add any notes or comments..." 
-                                    rows="4"
-                                    class="form-input"
-                                ></textarea>
-                            </div>
-
-                            <div class="form-actions">
-                                <button type="submit" class="submit-btn" id="submitBtn">
-                                    📤 Submit Essay
-                                </button>
-                                <button type="reset" class="reset-btn">
-                                    🔄 Clear Form
-                                </button>
-                            </div>
-
-                            <div class="form-message" id="formMessage"></div>
-                        </form>
-                    </div>
-                </section>
-
-                <!-- Submission Status -->
-                <section class="submission-status glass-card" id="submissionStatus" style="display: none;">
-                    <div class="section-header">
-                        <h2 class="section-title">✓ Submission Status</h2>
-                    </div>
-                    <div class="section-content">
-                        <div class="status-details" id="statusDetails"></div>
-                    </div>
-                </section>
+    <!-- NAVIGATION BAR (Linked back to home.html sections) -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="nav-links">
+                <a href="home.html#heroSection" class="nav-link">Home</a>
+                <a href="home.html#aboutSection" class="nav-link">About</a>
+                <a href="home.html#sliderSection" class="nav-link">Registration</a>
+                <a href="home.html#statsSection" class="nav-link">Stats</a>
+                <a href="home.html#gallery2025Section" class="nav-link">2025?</a>
             </div>
         </div>
+    </nav>
+
+    <!-- FLOATING LOGO -->
+    <div class="floating-logo">
+        <a href="home.html">
+            <img src="Images/scl-club.png" alt="Logo" style="width: 100%; height: auto; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));" />
+        </a>
     </div>
 
-    <!-- Footer -->
-    <footer class="quiz-footer">
-        <p>&copy; 2026 AkashaXplore. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#contact">Contact Us</a></p>
-    </footer>
+    <div class="results-page-container">
+        
+        <!-- PAGE HEADER -->
+        <div style="text-align: center; position: relative; z-index: 1;">
+            <h1 class="page-title">QUASAR 2026 RESULTS</h1>
+            <p class="page-subtitle">Celebrating the brilliance of young astronomers across Sri Lanka. Congratulations to all participating schools and the victorious teams!</p>
+        </div>
 
-    <script src="quiz-app.js"></script>
+        <!-- COMING SOON SECTION -->
+        <div class="glass-panel highlight-panel" style="text-align: center; padding: 100px 40px; margin-top: 20px;">
+            <div class="section-header" style="margin-bottom: 0;">
+                <span class="section-badge" style="margin-bottom: 25px; font-size: 14px; padding: 10px 24px;">Stay Tuned</span>
+                <h2 class="page-title" style="font-size: 58px; display: flex; align-items: center; justify-content: center; gap: 20px;">
+                    <span class="trophy-icon" style="font-size: 48px;">⏳</span>
+                    COMING SOON
+                    <span class="trophy-icon" style="font-size: 48px;">⏳</span>
+                </h2>
+                <p style="color: #FFF8DC; margin-top: 25px; font-size: 18px; line-height: 1.8; max-width: 700px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                    The stars are aligning! We are currently finalizing the scores and preparing the official announcements. Check back shortly to discover the brilliant minds who conquered the Quasar 2026 Astronomy Quiz.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script handling sticky nav logic if necessary -->
+    <script>
+        // Simple logic to add background to navbar on scroll for better visibility
+        const navbar = document.querySelector('.navbar-container');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(20, 20, 30, 0.8)';
+                navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.5)';
+            } else {
+                navbar.style.background = 'rgba(255,255,255,0.06)';
+                navbar.style.boxShadow = '0 10px 40px rgba(0,0,0,0.3)';
+            }
+        });
+    </script>
 </body>
 </html>

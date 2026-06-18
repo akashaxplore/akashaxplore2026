@@ -193,6 +193,121 @@
 
 <div class="page">
 
+<!-- QUIZ WINNERS SECTION -->
+<style>
+    @keyframes goldPulse {
+        0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15), inset 0 0 15px rgba(255, 215, 0, 0.1); }
+        100% { box-shadow: 0 0 45px rgba(255, 215, 0, 0.5), inset 0 0 25px rgba(255, 215, 0, 0.2); }
+    }
+    @keyframes trophyBounce {
+        0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+        50% { transform: translateY(-10px) scale(1.15) rotate(5deg); }
+    }
+    @keyframes shimmerText {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+    }
+    @keyframes shimmerBackground {
+        0% { transform: translateX(-100%) rotate(30deg); }
+        100% { transform: translateX(100%) rotate(30deg); }
+    }
+    #quizWinnersSection .about-card-content {
+        border: 1px solid rgba(255, 215, 0, 0.35);
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, rgba(40, 30, 20, 0.94), rgba(20, 15, 5, 0.96)) !important;
+        max-width: 800px !important;
+        margin: 0 auto;
+    }
+    #quizWinnersSection .about-card-content::after {
+        content: '';
+        position: absolute;
+        top: -100%; left: -100%; width: 200%; height: 300%;
+        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,215,0,0.15) 50%, rgba(255,255,255,0) 100%);
+        animation: shimmerBackground 5s infinite linear;
+        pointer-events: none;
+        z-index: 0;
+    }
+    #quizWinnersSection .about-header {
+        position: relative;
+        z-index: 1;
+    }
+    .trophy-icon {
+        display: inline-block;
+        font-size: 38px;
+        margin: 0 12px;
+        animation: trophyBounce 2s infinite ease-in-out;
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+    }
+    .winning-title {
+        background: linear-gradient(90deg, #FFDF00, #FFF8DC, #D4AF37, #FFDF00);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: shimmerText 3s linear infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px !important;
+    }
+    .winning-btn {
+        background: linear-gradient(135deg, #FFDF00, #D4AF37) !important;
+        color: #000 !important;
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4), inset 0 2px 0 rgba(255,255,255,0.5) !important;
+        border: none !important;
+        font-weight: 800 !important;
+        letter-spacing: 3px !important;
+    }
+    
+    .winning-status {
+        background: rgba(255, 215, 0, 0.15) !important;
+        border-color: rgba(255, 215, 0, 0.5) !important;
+        color: #FFDF00 !important;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+    /* Tiny floating sparkles */
+    .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #FFDF00;
+        border-radius: 50%;
+        box-shadow: 0 0 10px 2px #FFDF00;
+        opacity: 0;
+        animation: sparkleAnim 3s infinite linear;
+        z-index: 1;
+    }
+    @keyframes sparkleAnim {
+        0% { transform: translateY(0) scale(0); opacity: 0; }
+        50% { opacity: 1; transform: translateY(-20px) scale(1.5); }
+        100% { transform: translateY(-40px) scale(0); opacity: 0; }
+    }
+</style>
+<section class="about-section" id="quizWinnersSection" aria-label="Quiz Winners">
+    <div class="about-card-content" style="text-align: center; background: linear-gradient(135deg, rgba(30, 22, 100, 0.94), rgba(15, 15, 45, 0.96));">
+        <div class="sparkle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="sparkle" style="top: 70%; left: 85%; animation-delay: 1s;"></div>
+        <div class="sparkle" style="top: 40%; left: 80%; animation-delay: 0.5s;"></div>
+        <div class="sparkle" style="top: 80%; left: 15%; animation-delay: 1.5s;"></div>
+        <div class="sparkle" style="top: 30%; left: 50%; animation-delay: 2s;"></div>
+        
+        <div class="about-header" style="display: flex; flex-direction: column; align-items: center;">
+            <span class="about-status winning-status">🏆 RESULTS ANNOUNCED 🏆</span>
+            <div class="about-title winning-title">
+                <span class="trophy-icon">✨</span>
+                VIEW QUIZ WINNING TEAMS
+                <span class="trophy-icon">✨</span>
+            </div>
+            <p class="about-subtitle" style="margin: 0 auto; max-width: 800px; color: #FFF8DC;">The QUASAR 2026 Astronomy Quiz competition has concluded. Discover the brilliant minds and teams who emerged victorious and showcased their cosmic knowledge!</p>
+            <div style="margin-top: 30px;">
+                <a href="quiz.html" class="scroll-cta hero-register winning-btn" style="text-decoration: none; display: inline-flex; width: auto; padding: 0 40px; margin-top: 0;">Coming Soon</a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ABOUT SECTION (inserted) -->
 <section class="about-section" id="aboutSection" aria-label="About">
 
@@ -218,11 +333,11 @@
         </div>
         <div class="stats-grid">
             <div class="stat-item">
-                <div class="stat-number" data-target="50">0</div>
+                <div class="stat-number" data-target="150">0</div>
                 <div class="stat-label">Registered Students</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number" data-target="8">0</div>
+                <div class="stat-number" data-target="23">0</div>
                 <div class="stat-label">Registered Schools</div>
             </div>
             <div class="stat-item">
@@ -941,12 +1056,12 @@ if(gallerySlider && nextGalleryBtn && prevGalleryBtn){
         </button>
         
         <div class="timer-lightbox-header">
-            <h2 class="timer-lightbox-title">⏳ TIME IS RUNNING OUT!</h2>
-            <p class="timer-lightbox-subtitle">Competition Registration Deadline</p>
+            <h2 class="timer-lightbox-title"> Event Dates Announced !</h2>
+            <p class="timer-lightbox-subtitle">Get Ready For The Big Day </p>
         </div>
         
         <div class="registration-timer">
-            <div class="timer-label">REGISTRATION CLOSES IN</div>
+            <div class="timer-label">Countdown to Event</div>
             <div class="timer-display">
                 <span class="timer-unit">
                     <span class="timer-value" id="timerDays">00</span>
@@ -971,7 +1086,7 @@ if(gallerySlider && nextGalleryBtn && prevGalleryBtn){
         </div>
         
         <div class="timer-lightbox-cta">
-            <button class="timer-register-btn" id="timerRegisterBtn">REGISTER NOW</button>
+            <button class="timer-register-btn" id="timerRegisterBtn">Check the Quiz Results </button>
             <button class="timer-dismiss-btn" id="timerDismissBtn">LATER</button>
         </div>
     </div>
@@ -981,8 +1096,8 @@ if(gallerySlider && nextGalleryBtn && prevGalleryBtn){
 // INTERACTIVE COUNTDOWN TIMER LIGHTBOX
 function initializeTimerLightbox() {
     try {
-        // Set the timer to registration deadline: June 10, 2026 at 06:30 UTC
-        const timerEndDate = new Date('2026-06-10T06:30:00Z');
+        // Set the timer to registration deadline: July 03, 2026 at 06:30 UTC
+        const timerEndDate = new Date('2026-07-03T06:30:00Z');
         
         // Get all required DOM elements with null checks
         const timerLightbox = document.getElementById('timerLightbox');

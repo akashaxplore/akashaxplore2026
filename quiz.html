@@ -253,6 +253,80 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
+        .school-entry {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(255,215,0,0.2);
+            position: relative; /* Added for absolute positioning of child elements */
+            overflow: hidden; /* Ensure content like tags don't overflow */
+        }
+        
+        .place-entry {
+            transition: all 0.3s ease;
+        }
+
+        .place-entry:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.8);
+        }
+
+        .first-place {
+            background-color: rgba(255, 215, 0, 0.2) !important;
+            border-color: #FFDF00 !important;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.3);
+            animation: floatGlow 4s ease-in-out infinite;
+        }
+
+        .second-place {
+            background-color: rgba(192, 192, 192, 0.2) !important;
+            border-color: #C0C0C0 !important;
+            box-shadow: 0 0 20px rgba(192, 192, 192, 0.5), inset 0 0 15px rgba(192, 192, 192, 0.2);
+        }
+
+        .third-place {
+            background-color: rgba(205, 127, 50, 0.2) !important;
+            border-color: #CD7F32 !important;
+            box-shadow: 0 0 15px rgba(205, 127, 50, 0.4), inset 0 0 10px rgba(205, 127, 50, 0.2);
+        }
+
+        .place-tag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 2px 8px; /* Adjusted padding */
+            border-bottom-left-radius: 8px; /* Curve bottom-left corner */
+            border-top-right-radius: 8px; /* Match parent border-radius */
+            font-size: 10px; /* Smaller font size */
+            font-weight: 700; /* Bolder font */
+            white-space: nowrap;
+            transform: translate(1px, -1px); /* Slight adjustment for border placement */
+            z-index: 2; /* Ensure it's above other content */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Subtle shadow for depth */
+        }
+
+        .first-place-tag {
+            background-color: #FFDF00; /* Gold */
+            color: #1a1a1a;
+        }
+
+        .second-place-tag {
+            background-color: #C0C0C0; /* Silver */
+            color: #1a1a1a;
+        }
+
+        .third-place-tag {
+            background-color: #CD7F32; /* Bronze */
+            color: #fff;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .results-page-container { 
@@ -309,18 +383,45 @@
             <p class="page-subtitle">Celebrating the brilliance of young astronomers across Sri Lanka. Congratulations to all participating schools and the victorious teams!</p>
         </div>
 
-        <!-- COMING SOON SECTION -->
-        <div class="glass-panel highlight-panel" style="text-align: center; padding: 100px 40px; margin-top: 20px;">
-            <div class="section-header" style="margin-bottom: 0;">
-                <span class="section-badge" style="margin-bottom: 25px; font-size: 14px; padding: 10px 24px;">Stay Tuned</span>
+        <!-- SEMI-FINALISTS SECTION -->
+        <div class="glass-panel highlight-panel" style="text-align: center; margin-top: 20px;">
+            <div class="section-header">
+                <span class="section-badge" style="margin-bottom: 25px; font-size: 14px; padding: 10px 24px;">Results Announced!</span>
                 <h2 class="page-title" style="font-size: 58px; display: flex; align-items: center; justify-content: center; gap: 20px;">
                     <span class="trophy-icon" style="font-size: 48px;"></span>
-                    COMING SOON
+                    SEMI-FINALISTS
                     <span class="trophy-icon" style="font-size: 48px;"></span>
                 </h2>
                 <p style="color: #FFF8DC; margin-top: 25px; font-size: 18px; line-height: 1.8; max-width: 700px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-                    The stars are aligning! We are currently finalizing the scores and preparing the official announcements. Check back shortly to discover the brilliant minds who conquered the Quasar 2026 Astronomy Quiz.
+                    Congratulations to the schools selected for the semi-final rounds of the Quasar 2026 Astronomy Quiz! Their dedication and cosmic knowledge shone brightest.
                 </p>
+            </div>
+            <div style="margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <div class="school-entry place-entry first-place" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+                    <img src="Images/ananda.png" alt="Ananda A Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
+                    <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">1. ANANDA COLLEGE (TEAM A) <span class="place-tag first-place-tag">1st</span></span>
+                    <span style="color: #FFDF00; font-weight: bold;"></span>
+                </div>
+                <div class="school-entry place-entry second-place" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+                    <img src="Images/bandaranayake.png" alt="Bandaranayaka veyangoda Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
+                    <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">2. BANDARANAYAKE COLLEGE, VEYANGODA <span class="place-tag second-place-tag">2nd</span></span>
+                    <span style="color: #FFDF00; font-weight: bold;"></span>
+                </div>
+                <div class="school-entry place-entry third-place" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+                    <img src="Images/sangamiththa.png" alt="Sangamiththa Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
+                    <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">3. SANGAMITHTHA BALIKA VIDYALAYA <span class="place-tag third-place-tag">3rd</span></span>
+                    <span style="color: #FFDF00; font-weight: bold;"></span>
+                </div>
+                <div class="school-entry place-entry" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+                    <img src="Images/sivali.png" alt="Sivali Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
+                    <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">4. SIVALI CENTRAL COLLEGE</span>
+                    <span style="color: #FFDF00; font-weight: bold;"></span>
+                </div>
+                <div class="school-entry place-entry" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+                    <img src="Images/nalanda.png" alt="Nalanda A Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
+                    <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">5. NALANDA COLLEGE (TEAM A)</span>
+                    <span style="color: #FFDF00; font-weight: bold;"></span>
+                </div>
             </div>
         </div>
 

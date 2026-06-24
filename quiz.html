@@ -350,6 +350,37 @@
             .team-grid {
                 grid-template-columns: 1fr;
             }
+
+            /* Semi-finalist specific mobile styles */
+            .semi-finalist-header .page-title {
+                font-size: 38px !important;
+            }
+            .semi-finalist-header .trophy-icon {
+                font-size: 28px !important;
+            }
+            .semi-finalist-header .section-badge {
+                font-size: 12px !important;
+                padding: 8px 16px !important;
+            }
+            .semi-finalist-header p {
+                font-size: 16px !important;
+            }
+            .school-entry-list {
+                gap: 12px !important;
+            }
+            .school-entry {
+                padding: 8px !important;
+            }
+            .school-entry-name {
+                font-size: 8px !important;
+                /* Make the text a bit less bold on mobile to improve readability */
+                font-weight: 200 !important; 
+            }
+            .school-entry img {
+                width: 35px !important;
+                height: 35px !important;
+            }
+
         }
     </style>
 </head>
@@ -385,19 +416,19 @@
 
         <!-- SEMI-FINALISTS SECTION -->
         <div class="glass-panel highlight-panel" style="text-align: center; margin-top: 20px;">
-            <div class="section-header">
-                <span class="section-badge" style="margin-bottom: 25px; font-size: 14px; padding: 10px 24px;">Results Announced!</span>
-                <h2 class="page-title" style="font-size: 58px; display: flex; align-items: center; justify-content: center; gap: 20px;">
-                    <span class="trophy-icon" style="font-size: 48px;"></span>
+            <div class="section-header semi-finalist-header" style="margin-bottom: 30px;">
+                <span class="section-badge" style="margin-bottom: 25px;">Results Announced!</span>
+                <h2 class="page-title" style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                    <span class="trophy-icon"></span>
                     SEMI-FINALISTS
-                    <span class="trophy-icon" style="font-size: 48px;"></span>
+                    <span class="trophy-icon"></span>
                 </h2>
-                <p style="color: #FFF8DC; margin-top: 25px; font-size: 18px; line-height: 1.8; max-width: 700px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                <p style="color: #FFF8DC; margin-top: 20px; line-height: 1.7; max-width: 700px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
                     Congratulations to the schools selected for the semi-final rounds of the Quasar 2026 Astronomy Quiz! Their dedication and cosmic knowledge shone brightest.
                 </p>
             </div>
-            <div style="margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <div class="school-entry place-entry first-place" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+            <div class="school-entry-list" style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <div class="school-entry place-entry first-place">
                     <img src="Images/ananda.png" alt="Ananda A Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
                     <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">1. ANANDA COLLEGE (TEAM A) <span class="place-tag first-place-tag">1st</span></span>
                     <span style="color: #FFDF00; font-weight: bold;"></span>
@@ -405,22 +436,18 @@
                 <div class="school-entry place-entry second-place" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
                     <img src="Images/bandaranayake.png" alt="Bandaranayaka veyangoda Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
                     <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">2. BANDARANAYAKE COLLEGE, VEYANGODA <span class="place-tag second-place-tag">2nd</span></span>
-                    <span style="color: #FFDF00; font-weight: bold;"></span>
                 </div>
-                <div class="school-entry place-entry third-place" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+                <div class="school-entry place-entry third-place">
                     <img src="Images/sangamiththa.png" alt="Sangamiththa Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
                     <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">3. SANGAMITHTHA BALIKA VIDYALAYA <span class="place-tag third-place-tag">3rd</span></span>
-                    <span style="color: #FFDF00; font-weight: bold;"></span>
                 </div>
-                <div class="school-entry place-entry" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+                <div class="school-entry place-entry">
                     <img src="Images/sivali.png" alt="Sivali Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
                     <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">4. SIVALI CENTRAL COLLEGE</span>
-                    <span style="color: #FFDF00; font-weight: bold;"></span>
                 </div>
-                <div class="school-entry place-entry" style="display: flex; align-items: center; width: 100%; max-width: 400px; padding: 10px; background-color: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
+                <div class="school-entry place-entry">
                     <img src="Images/nalanda.png" alt="Nalanda A Logo" style="width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 50%;">
                     <span style="color: #fff; font-weight: bold; flex-grow: 1; text-align: left;">5. NALANDA COLLEGE (TEAM A)</span>
-                    <span style="color: #FFDF00; font-weight: bold;"></span>
                 </div>
             </div>
         </div>
